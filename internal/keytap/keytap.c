@@ -106,6 +106,13 @@ static CGEventRef eventCallback(CGEventTapProxy proxy, CGEventType type,
         return event;
     }
 
+    if (type == kCGEventLeftMouseDown  || type == kCGEventLeftMouseUp  ||
+        type == kCGEventRightMouseDown || type == kCGEventRightMouseUp ||
+        type == kCGEventOtherMouseDown || type == kCGEventOtherMouseUp) {
+        transformFlags(event);
+        return event;
+    }
+
     int keyCode = (int)CGEventGetIntegerValueField(event, kCGKeyboardEventKeycode);
     if (keyCode < 0 || keyCode > 255) return event;
 
@@ -190,7 +197,13 @@ int StartEventTap(KeymapEntry *keymap, int count, int imeSwitching) {
 
     CGEventMask mask = CGEventMaskBit(kCGEventKeyDown)
                      | CGEventMaskBit(kCGEventKeyUp)
-                     | CGEventMaskBit(kCGEventFlagsChanged);
+                     | CGEventMaskBit(kCGEventFlagsChanged)
+                     | CGEventMaskBit(kCGEventLeftMouseDown)
+                     | CGEventMaskBit(kCGEventLeftMouseUp)
+                     | CGEventMaskBit(kCGEventRightMouseDown)
+                     | CGEventMaskBit(kCGEventRightMouseUp)
+                     | CGEventMaskBit(kCGEventOtherMouseDown)
+                     | CGEventMaskBit(kCGEventOtherMouseUp);
 
     s_eventTap = CGEventTapCreate(
         kCGHIDEventTap,
