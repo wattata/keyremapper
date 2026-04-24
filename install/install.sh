@@ -53,5 +53,11 @@ echo "  システム設定 → プライバシーとセキュリティ → ア�
 echo "  → keyremapper を一度削除して再追加してください。"
 echo ""
 
+echo "【入力監視権限の確認】"
+echo "  複数キーボードの自動切り替えには入力監視権限が必要です。"
+echo "  システム設定 → プライバシーとセキュリティ → 入力監視"
+echo "  → keyremapper を追加してください。"
+echo ""
+
 echo "動作確認："
 echo "  launchctl list | grep keyremapper"
