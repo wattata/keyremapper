@@ -5,10 +5,6 @@
 #include <stdlib.h>
 #include <string.h>
 
-#define kVK_JIS_Eisu 102
-#define kVK_JIS_Kana 104
-#define kVK_LeftCmd  55
-#define kVK_RightCmd 54
 #define IME_SENTINEL 0xDEADBEEFL
 
 static CFMachPortRef      s_eventTap      = NULL;
@@ -126,14 +122,14 @@ static CGEventRef eventCallback(CGEventTapProxy proxy, CGEventType type,
         int effectiveKey = e ? e->to : keyCode;
 
         if (s_imeSwitching) {
-            if (effectiveKey == kVK_LeftCmd) {
+            if (effectiveKey == kVK_Command) {
                 if (isDown) {
                     atomic_store(&leftCmdAlone, 1);
                 } else {
                     if (atomic_load(&leftCmdAlone)) postIMEKey(kVK_JIS_Eisu);
                     atomic_store(&leftCmdAlone, 0);
                 }
-            } else if (effectiveKey == kVK_RightCmd) {
+            } else if (effectiveKey == kVK_RightCommand) {
                 if (isDown) {
                     atomic_store(&rightCmdAlone, 1);
                 } else {
