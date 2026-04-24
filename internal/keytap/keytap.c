@@ -165,7 +165,8 @@ static CGEventRef eventCallback(CGEventTapProxy proxy, CGEventType type,
                 CGEventSetIntegerValueField(event, kCGKeyboardEventKeycode, e->to);
                 return event;
             }
-            postKeyWithModifiers(e->to, e->modifiers, true);
+            CGEventFlags curFlags = CGEventGetFlags(event);
+            postKeyWithModifiers(e->to, (uint32_t)(curFlags | (CGEventFlags)e->modifiers), true);
             return NULL;
         }
     } else if (type == kCGEventKeyUp) {
@@ -177,7 +178,8 @@ static CGEventRef eventCallback(CGEventTapProxy proxy, CGEventType type,
                 CGEventSetIntegerValueField(event, kCGKeyboardEventKeycode, e->to);
                 return event;
             }
-            postKeyWithModifiers(e->to, e->modifiers, false);
+            CGEventFlags curFlags = CGEventGetFlags(event);
+            postKeyWithModifiers(e->to, (uint32_t)(curFlags | (CGEventFlags)e->modifiers), false);
             return NULL;
         }
     }
